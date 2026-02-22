@@ -1,5 +1,5 @@
 import { ArrowRight, Play, CheckCircle2, Users } from 'lucide-react';
-import { Button } from '../components/ui/Button';
+import { Button, getButtonClassName } from '../components/ui/Button';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { CourseCard } from '../components/CourseCard';
@@ -136,10 +136,8 @@ export default function LandingPage() {
             <h2 className="text-4xl font-bold text-gray-900">Featured Courses</h2>
             <p className="text-gray-500">Expand your knowledge with our most popular programs.</p>
           </div>
-          <Link to="/courses">
-            <Button variant="link" className="gap-2 text-[#1a365d]">
-              View All Courses <ArrowRight size={16} />
-            </Button>
+          <Link to="/courses" className={getButtonClassName({ variant: 'link', className: 'gap-2 text-[#1a365d]' })}>
+            View All Courses <ArrowRight size={16} />
           </Link>
         </div>
 

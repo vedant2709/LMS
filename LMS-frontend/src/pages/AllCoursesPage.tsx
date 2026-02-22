@@ -54,7 +54,7 @@ export default function AllCoursesPage() {
     });
 
     return result;
-  }, [searchQuery, selectedCategories, selectedLevels, minRating, priceFilter, sortBy]);
+  }, [COURSES, searchQuery, selectedCategories, selectedLevels, minRating, priceFilter, sortBy]);
 
   const toggleCategory = (category: string) => {
     setSelectedCategories(prev => 

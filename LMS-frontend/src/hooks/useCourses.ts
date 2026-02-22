@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { createContext, createElement, useContext, useEffect, useMemo, useState } from 'react';
 
 export interface Course {
   id: string;
@@ -100,17 +100,31 @@ const INITIAL_COURSES: Course[] = [
   }
 ];
 
-export function useCourses() {
+type CoursesContextValue = {
+  courses: Course[];
+  addCourse: (course: Omit<Course, 'id'>) => void;
+  updateCourse: (id: string, updatedCourse: Partial<Course>) => void;
+  deleteCourse: (id: string) => void;
+};
+
+const CoursesContext = createContext<CoursesContextValue | null>(null);
+
+export function CoursesProvider({ children }: { children: React.ReactNode }) {
   const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
     const saved = localStorage.getItem('eduflow_courses');
     if (saved) {
-      setCourses(JSON.parse(saved));
-    } else {
-      setCourses(INITIAL_COURSES);
-      localStorage.setItem('eduflow_courses', JSON.stringify(INITIAL_COURSES));
+      try {
+        setCourses(JSON.parse(saved));
+      } catch {
+        setCourses(INITIAL_COURSES);
+        localStorage.setItem('eduflow_courses', JSON.stringify(INITIAL_COURSES));
+      }
+      return;
     }
+    setCourses(INITIAL_COURSES);
+    localStorage.setItem('eduflow_courses', JSON.stringify(INITIAL_COURSES));
   }, []);
 
   const saveCourses = (newCourses: Course[]) => {
@@ -119,7 +133,12 @@ export function useCourses() {
   };
 
   const addCourse = (course: Omit<Course, 'id'>) => {
-    const newCourse = { ...course, id: Math.random().toString(36).substr(2, 9) };
+    const newCourse = {
+      ...course,
+      id: typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : Math.random().toString(36).slice(2, 11),
+    };
     saveCourses([...courses, newCourse]);
   };
 
@@ -131,5 +150,18 @@ export function useCourses() {
     saveCourses(courses.filter(c => c.id !== id));
   };
 
-  return { courses, addCourse, updateCourse, deleteCourse };
+  const value = useMemo(
+    () => ({ courses, addCourse, updateCourse, deleteCourse }),
+    [courses]
+  );
+
+  return createElement(CoursesContext.Provider, { value }, children);
+}
+
+export function useCourses() {
+  const ctx = useContext(CoursesContext);
+  if (!ctx) {
+    throw new Error('useCourses must be used within CoursesProvider');
+  }
+  return ctx;
 }

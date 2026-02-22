@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { GraduationCap } from 'lucide-react';
-import { Button } from './ui/Button';
+import { getButtonClassName } from './ui/Button';
 
 export function Navbar() {
   return (
@@ -19,11 +19,11 @@ export function Navbar() {
       </div>
 
       <div className="flex items-center gap-4">
-        <Link to="/login">
-          <Button variant="ghost" size="sm">Log In</Button>
+        <Link to="/login" className={getButtonClassName({ variant: 'ghost', size: 'sm' })}>
+          Log In
         </Link>
-        <Link to="/signup">
-          <Button size="sm">Sign Up</Button>
+        <Link to="/signup" className={getButtonClassName({ size: 'sm' })}>
+          Sign Up
         </Link>
       </div>
     </nav>

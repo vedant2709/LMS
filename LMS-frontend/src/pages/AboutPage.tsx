@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { Button } from '../components/ui/Button';
+import { getButtonClassName } from '../components/ui/Button';
 import { Users, BookOpen, Award, Globe, Heart, Zap, Shield, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -214,11 +214,11 @@ export default function AboutPage() {
               Whether you're a student looking to learn or an expert looking to teach, there's a place for you at EduFlow.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/signup">
-                <Button variant="secondary" size="lg" className="px-12">Get Started</Button>
+              <Link to="/signup" className={getButtonClassName({ variant: 'secondary', size: 'lg', className: 'px-12' })}>
+                Get Started
               </Link>
-              <Link to="/courses">
-                <Button variant="outline" size="lg" className="px-12 text-white border-white hover:bg-white/10">Browse Courses</Button>
+              <Link to="/courses" className={getButtonClassName({ variant: 'outline', size: 'lg', className: 'px-12 text-white border-white hover:bg-white/10' })}>
+                Browse Courses
               </Link>
             </div>
           </div>

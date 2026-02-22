@@ -51,7 +51,7 @@ export default function AdminPanelPage() {
   const stats = [
     { label: 'Total Courses', value: courses.length, icon: BookOpen, color: 'text-blue-600 bg-blue-50' },
     { label: 'Total Students', value: courses.reduce((acc, c) => acc + (c.students || 0), 0).toLocaleString(), icon: Users, color: 'text-emerald-600 bg-emerald-50' },
-    { label: 'Avg. Rating', value: (courses.reduce((acc, c) => acc + c.rating, 0) / courses.length).toFixed(1), icon: TrendingUp, color: 'text-amber-600 bg-amber-50' },
+    { label: 'Avg. Rating', value: (courses.length ? courses.reduce((acc, c) => acc + c.rating, 0) / courses.length : 0).toFixed(1), icon: TrendingUp, color: 'text-amber-600 bg-amber-50' },
     { label: 'Revenue', value: `$${(courses.reduce((acc, c) => acc + (c.numericPrice * (c.students || 0)), 0) / 1000).toFixed(1)}k`, icon: DollarSign, color: 'text-purple-600 bg-purple-50' },
   ];
 

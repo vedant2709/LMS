@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { GraduationCap, Eye, Info } from 'lucide-react';
-import { Button } from '../components/ui/Button';
+import { Button, getButtonClassName } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { motion } from 'motion/react';
 
@@ -18,8 +18,8 @@ export default function SignUpPage() {
           <Link to="#" className="hover:text-[#1a365d]">Features</Link>
           <Link to="#" className="hover:text-[#1a365d]">Pricing</Link>
           <Link to="#" className="hover:text-[#1a365d]">About</Link>
-          <Link to="/login">
-            <Button variant="primary" size="sm" className="px-6">Log In</Button>
+          <Link to="/login" className={getButtonClassName({ variant: 'primary', size: 'sm', className: 'px-6' })}>
+            Log In
           </Link>
         </div>
       </nav>
